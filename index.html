@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<style>
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: url("https://www.toptal.com/designers/subtlepatterns/patterns/funky-lines.png");
+  }
+
+  .col-centered{
+    float: none;
+    margin: 0 auto;
+  }
+
+  .welcome{
+    padding-top: 2em;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-radius: 1em;
+    overflow: hidden;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: grey;
+   color: white;
+   text-align: center;
+   border-collapse: collapse;
+   border-radius: 1em;
+   overflow: hidden;
+}
+</style>
+
+<head>
+  <title>Grade Calc</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1"> My Grade Calculator </span>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 welcome col-centered">
+        <div class="jumbotron">
+          <h1 class="display-3">Hello!</h1>
+          <p class="lead">Use this website to calculate the grade you need to <em>not fail</em> CS1371, or any of your other classes!</p>
+          <hr class="my-4">
+          <p>Enter the weight for the following categories, along with your score for each category and press submit to see what grade you need to get on your final.</p>
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card">
+          <img class="card-img-top" src="images/scheller.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Reconsidering your life?</h5>
+            <p class="card-text">Make pain a thing of the past and try the Scheller College of Business! </p>
+            <a href="https://www.scheller.gatech.edu/index.html" target = "blank" class="btn btn-primary">Link</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 text-center">
+        <form id="frm1" >
+          <table class="table table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th scope = "col">Category</th>
+                <th scope = "col">Weight (%)</th>
+                <th scope = "col">My Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope = "row">Tests</th>
+                <td><input type="number" name="test_weight" class="form-control"></td>
+                <td><input type="number" name="test_score" class="form-control"></td>
+              </tr>
+              <tr>
+                <th scope = "row">Homework</th>
+                <td><input type="number" name="homework_weight" class="form-control"></td>
+                <td><input type="number" name="homework_score" class="form-control"></td>
+              </tr>
+              <tr>
+                <th scope = "row">Quizzes</th>
+                <td><input type="number" name="quiz_weight" class="form-control"></td>
+                <td><input type="number" name="quiz_score" class="form-control"></td>
+              </tr>
+              <tr>
+                <th scope = "row">Participation</th>
+                <td><input type="number" name="participation_weight" class="form-control"></td>
+                <td><input type="number" name="participation_score" class="form-control"></td>
+              </tr>
+              <tr>
+                <th scope = "row">Extra Credit</th>
+                <td></td>
+                <td><input type="number" name="ec_score" class="form-control"></td>
+              </tr>
+              <tr>
+                <th scope = "row">Final</th>
+                <td><input type="number" name="final_weight" class="form-control"></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table table-striped">
+            <thead class="thead-light">
+              <tr>
+                <th scope = "col">Desired Grade</th>
+                <th scope = "col">Required Final Grade</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="number" name="desired_grade" class="form-control"></td>
+                <td><h3 id="demo"></h3></td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table table-success">
+
+            <tbody>
+              <tr>
+                <td><button class="form-control" type = "button" onclick="myFunction()">Calculate</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+      <div class="col-md-3">
+
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="footer">
+      <p>Hello! This project is intended to serve as my submission for the CS1371 Final Project. Feel free to check out the source on my github.</p>
+    </div>
+  </div>
+  <script>
+    function myFunction() {
+        var x = document.getElementById("frm1");
+        var sum = 0;
+        var i;
+
+        test_raw = Number(x.elements[1].value)*(Number(x.elements[0].value)/100);
+        homework_raw = Number(x.elements[3].value)*(Number(x.elements[2].value)/100);
+        quiz_raw = Number(x.elements[5].value)*(Number(x.elements[4].value)/100);
+        participation_raw = Number(x.elements[7].value)*(Number(x.elements[6].value)/100);
+        extra_credit = Number(x.elements[8].value)
+        final_weight = Number(x.elements[9].value)
+        desired_final = Number(x.elements[10].value)
+
+        score_needed = (desired_final - extra_credit - test_raw - homework_raw - quiz_raw - participation_raw)/(final_weight/100)
+
+        document.getElementById("demo").innerHTML = score_needed;
+    }
+  </script>
+</body>
+
+</html>
