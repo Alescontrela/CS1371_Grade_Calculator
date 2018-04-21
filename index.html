@@ -30,13 +30,33 @@
    left: 0;
    bottom: 0;
    width: 100%;
-   background-color: grey;
+   background-color: #e9ecef;
    color: white;
    text-align: center;
    border-collapse: collapse;
    border-radius: 1em;
    overflow: hidden;
 }
+
+  .footer_text {
+    margin-top: 1em;
+  }
+
+  p.footer_text {
+    font-size: 1.2em;
+    color: black;
+  }
+
+  a:link {
+    text-decoration: none !important;
+  }
+
+  .submit_button {
+    background-color: #c3e6cb !important;
+  }
+
+
+
 </style>
 
 <head>
@@ -53,7 +73,7 @@
 
 <body>
   <nav class="navbar navbar-light bg-light">
-    <span class="navbar-brand mb-0 h1"> My Grade Calculator </span>
+    <span class="navbar-brand mb-0 h1"> Grade Calculator by Alejandro Escontrela </span>
   </nav>
   <div class="container-fluid">
     <div class="row">
@@ -85,29 +105,29 @@
               <tr>
                 <th scope = "col">Category</th>
                 <th scope = "col">Weight (%)</th>
-                <th scope = "col">My Score</th>
+                <th scope = "col">Score(s)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th scope = "row">Tests</th>
                 <td><input type="number" name="test_weight" class="form-control"></td>
-                <td><input type="number" name="test_score" class="form-control"></td>
+                <td><input type="text" name="test_score" class="form-control"></td>
               </tr>
               <tr>
                 <th scope = "row">Homework</th>
                 <td><input type="number" name="homework_weight" class="form-control"></td>
-                <td><input type="number" name="homework_score" class="form-control"></td>
+                <td><input type="text" name="homework_score" class="form-control"></td>
               </tr>
               <tr>
                 <th scope = "row">Quizzes</th>
                 <td><input type="number" name="quiz_weight" class="form-control"></td>
-                <td><input type="number" name="quiz_score" class="form-control"></td>
+                <td><input type="text" name="quiz_score" class="form-control"></td>
               </tr>
               <tr>
                 <th scope = "row">Participation</th>
                 <td><input type="number" name="participation_weight" class="form-control"></td>
-                <td><input type="number" name="participation_score" class="form-control"></td>
+                <td><input type="text" name="participation_score" class="form-control"></td>
               </tr>
               <tr>
                 <th scope = "row">Extra Credit</th>
@@ -139,21 +159,22 @@
 
             <tbody>
               <tr>
-                <td><button class="form-control" type = "button" onclick="myFunction()">Calculate</button></td>
+                <td><button class="form-control submit_button" type = "button" onclick="myFunction()">Calculate</button></td>
               </tr>
             </tbody>
           </table>
         </form>
       </div>
       <div class="col-md-3">
+        <div class="card">
+          <iframe class="card-img-top" src="https://giphy.com/embed/xT1Ra6gsLRINatl3s4" width="480" height="360" frameBorder="0"  allowFullScreen></iframe>
 
+        </div>
       </div>
     </div>
   </div>
-  <div class="container-fluid">
-    <div class="footer">
-      <p>Hello! This project is intended to serve as my submission for the CS1371 Final Project. Feel free to check out the source on my github.</p>
-    </div>
+  <div class="footer">
+    <p class="footer_text">This project is intended to serve as my submission for the CS1371 Final Project. Feel free to check out the source on <a target = "blank" href="https://github.com/Alescontrela/CS1371_Grade_Calculator">my github</a>.</p>
   </div>
   <script>
     function myFunction() {
@@ -161,17 +182,84 @@
         var sum = 0;
         var i;
 
-        test_raw = Number(x.elements[1].value)*(Number(x.elements[0].value)/100);
-        homework_raw = Number(x.elements[3].value)*(Number(x.elements[2].value)/100);
-        quiz_raw = Number(x.elements[5].value)*(Number(x.elements[4].value)/100);
-        participation_raw = Number(x.elements[7].value)*(Number(x.elements[6].value)/100);
-        extra_credit = Number(x.elements[8].value)
-        final_weight = Number(x.elements[9].value)
-        desired_final = Number(x.elements[10].value)
+        var test_weight =  Number(x.elements[0].value);
+        var homework_weight = Number(x.elements[2].value);
+        var quiz_weight = Number(x.elements[4].value);
+        var participation_weight = Number(x.elements[6].value);
+        var final_weight = Number(x.elements[9].value);
+        var desired_final = Number(x.elements[10].value)
+        console.log(x.elements[10].value);
+        var sum_weights = test_weight + homework_weight + quiz_weight + participation_weight + final_weight;
 
-        score_needed = (desired_final - extra_credit - test_raw - homework_raw - quiz_raw - participation_raw)/(final_weight/100)
 
-        document.getElementById("demo").innerHTML = score_needed;
+
+        if(sum_weights != 100 || x.elements[10].value == ""){
+          alert("Please enter class weights that sum to 100% and a desired final grade! Your current weights sum up to " + String(sum_weights) + "%")
+        } else {
+          /* Calculate Test raw score from comma-separated input */
+          test_scores = x.elements[1].value;
+          console.log("raw test scores" + test_scores);
+          var sumOfNums = 0;
+          var nums = test_scores.split(",");
+          for (var i = 0; i < nums.length; i++) {
+            sumOfNums += parseInt(nums[i]);
+          }
+          test_raw = sumOfNums/nums.length;
+          console.log("test_raw: " + String(test_raw));
+          test_raw = test_raw * (test_weight/100);
+          console.log("test_raw weighted: " + String(test_raw));
+
+          /* Calculate homework raw score from comma-separated input */
+          homework_scores = x.elements[3].value;
+          console.log("raw homework scores" + homework_scores);
+          var sumOfNums = 0;
+          var nums = homework_scores.split(",");
+          for (var i = 0; i < nums.length; i++) {
+            sumOfNums += parseInt(nums[i]);
+          }
+          homework_raw = sumOfNums/nums.length;
+          console.log("homework_raw: " + String(homework_raw));
+          homework_raw = homework_raw * (homework_weight/100);
+          console.log("homework_raw weighted: " + String(homework_raw));
+
+          /* Calculate quiz raw score from comma-separated input */
+          quiz_scores = x.elements[5].value;
+          console.log("raw quiz scores" + quiz_scores);
+          var sumOfNums = 0;
+          var nums = quiz_scores.split(",");
+          for (var i = 0; i < nums.length; i++) {
+            sumOfNums += parseInt(nums[i]);
+          }
+          quiz_raw = sumOfNums/nums.length;
+          console.log("quiz_raw: " + String(quiz_raw));
+          quiz_raw = quiz_raw * (quiz_weight/100);
+          console.log("quiz_raw weighted: " + String(quiz_raw));
+
+          /* Calculate participation raw score from comma-separated input */
+          participation_scores = x.elements[7].value;
+          console.log("raw participation scores" + participation_scores);
+          var sumOfNums = 0;
+          var nums = participation_scores.split(",");
+          for (var i = 0; i < nums.length; i++) {
+            sumOfNums += parseInt(nums[i]);
+          }
+          participation_raw = sumOfNums/nums.length;
+          console.log("participation_raw: " + String(participation_raw));
+          participation_raw = participation_raw * (participation_weight/100);
+          console.log("participation_raw weighted: " + String(participation_raw));
+
+          extra_credit = Number(x.elements[8].value)
+
+
+
+
+
+          score_needed = (desired_final - extra_credit - test_raw - homework_raw - quiz_raw - participation_raw)/(final_weight/100)
+
+          document.getElementById("demo").innerHTML = score_needed;
+        }
+
+
     }
   </script>
 </body>
